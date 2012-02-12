@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NarrowPhase", "NarrowPhase\NarrowPhase.vcxproj", "{A98B8BD9-7E9B-45B8-8410-F712A2B1B641}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4604102D-3D29-4913-BBCB-5CC09BAC374D} = {4604102D-3D29-4913-BBCB-5CC09BAC374D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FPSCamera", "FPSCamera\FPSCamera.vcxproj", "{4604102D-3D29-4913-BBCB-5CC09BAC374D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A98B8BD9-7E9B-45B8-8410-F712A2B1B641}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A98B8BD9-7E9B-45B8-8410-F712A2B1B641}.Debug|Win32.Build.0 = Debug|Win32
+		{A98B8BD9-7E9B-45B8-8410-F712A2B1B641}.Release|Win32.ActiveCfg = Release|Win32
+		{A98B8BD9-7E9B-45B8-8410-F712A2B1B641}.Release|Win32.Build.0 = Release|Win32
+		{4604102D-3D29-4913-BBCB-5CC09BAC374D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4604102D-3D29-4913-BBCB-5CC09BAC374D}.Debug|Win32.Build.0 = Debug|Win32
+		{4604102D-3D29-4913-BBCB-5CC09BAC374D}.Release|Win32.ActiveCfg = Release|Win32
+		{4604102D-3D29-4913-BBCB-5CC09BAC374D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
