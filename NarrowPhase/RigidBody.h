@@ -5,6 +5,7 @@
 #include "AABB.h"
 
 class ConvexPolyhedron;
+struct Contact;
 
 class RigidBody
 {
@@ -23,9 +24,11 @@ public:
 	Vec4& GetOrientation();
 	void SetOrientation(Vec4& orientation);
 	void ApplyAngularImpulse(Vec4& angularVelocity);
+	void ApplyAngularImpulse(Vec3& axis, float amount);
 	void ClearAcceleration();
 	void CalculateTransform();
 	void CalculateBB();
+	void ApplyContact(Contact& contact);
 	Vec4& GetDebugColour();
 	void SetDebugColour(Vec4& colour);
 	Mat4& GetTransform();

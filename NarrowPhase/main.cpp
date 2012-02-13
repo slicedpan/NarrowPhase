@@ -16,6 +16,7 @@
 #include "CentralForce.h"
 #include "Box.h"
 #include "DefaultDebugDrawer.h"
+#include "Tetrahedron.h"
 
 using namespace std;
 
@@ -75,9 +76,18 @@ void AddBox()
 	Box* box = new Box(ColouredParticleSystem::RandomVector(30.0) + Vec3(0, 15, 0), ColouredParticleSystem::RandomVector(10.0) + Vec3(5, 5, 5));
 	box->ApplyImpulse(ColouredParticleSystem::RandomVector(0.05));
 	box->ApplyAngularMomentum(ColouredParticleSystem::RandomVector(1), ((float)rand() * 0.01) / RAND_MAX);
-	box->Colour = ColouredParticleSystem::RandomVector(1);
+	box->ConvexPolyhedron::SetDebugColour(Vec4(ColouredParticleSystem::RandomVector(1), 1));
 	boxes.push_back(box);
 	PhysicsSystem::GetCurrentInstance()->AddRigidBody(box);
+}
+
+void AddTetra()
+{
+	Tetrahedron* tetra = new Tetrahedron(ColouredParticleSystem::RandomVector(30.0) + Vec3(0, 15, 0), (float)rand() * 10.0f / RAND_MAX);
+	tetra->ApplyImpulse(ColouredParticleSystem::RandomVector(0.05));
+	tetra->ApplyAngularImpulse(ColouredParticleSystem::RandomVector(1), ((float)rand() * 0.01) / RAND_MAX);
+	tetra->ConvexPolyhedron::SetDebugColour(Vec4(ColouredParticleSystem::RandomVector(1), 1));
+	PhysicsSystem::GetCurrentInstance()->AddRigidBody(tetra);
 }
 
 void setup()
@@ -107,7 +117,7 @@ void setup()
 
 	testBox = boxes[0];
 	testVel = testBox->GetVelocity();
-	testBox->SetDebugColour(Vec4(1, 0, 0, 1));
+	testBox->RigidBody::SetDebugColour(Vec4(1, 0, 0, 1));
 
 	PhysicsSystem::GetCurrentInstance()->SetDebugDrawer(new DefaultDebugDrawer());
 	glEnable(GL_LIGHTING);
@@ -166,7 +176,7 @@ void display ()
 
 	for (int i = 0; i < boxes.size(); ++i)
 	{
-		boxes[i]->Draw();
+		//boxes[i]->Draw();
 		Vec3& pos = boxes[i]->GetPosition();
 		Vec3& vel = boxes[i]->GetVelocity();
 		Vec3 imp = Vec3(0, 0, 0);
@@ -243,6 +253,8 @@ void HandleInput()
 	{
 		AddBox();
 	}
+	if (keystate['q'] && !lastKeystate['q'])
+		AddTetra();
 	if (keystate['p'] && !lastKeystate['p'])
 		physicsActive = !physicsActive;
 	

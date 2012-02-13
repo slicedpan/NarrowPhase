@@ -1,5 +1,5 @@
 #include "RigidBody.h"
-
+#include "Contact.h"
 
 RigidBody::RigidBody(void) : 
 	position(0, 0, 0), 
@@ -20,6 +20,12 @@ RigidBody::~RigidBody(void)
 
 }
 
+void RigidBody::ApplyContact(Contact& contact)
+{
+	Vec3 vel = dot(contact.Normal, velocity) * contact.Normal;
+	ApplyImpulse(-2 * vel);
+}
+
 Mat4& RigidBody::GetTransform()
 {
 	return transform;
@@ -38,6 +44,14 @@ void RigidBody::CalculateBB()
 AABB& RigidBody::GetAABB()
 {
 	return currentBB;
+}
+
+void RigidBody::ApplyAngularImpulse(Vec3& axis, float amount)
+{
+	float s = sin(amount);
+	axis.Normalise();
+	Vec4 quat = Vec4(cos(amount), s * axis[0], s * axis[1], s * axis[2]);
+	ApplyAngularImpulse(quat);
 }
 
 

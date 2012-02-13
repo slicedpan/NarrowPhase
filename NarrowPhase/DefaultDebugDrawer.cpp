@@ -118,3 +118,16 @@ void DefaultDebugDrawer::DrawPoly(ConvexPolyhedron* poly)
 	glEnd();	
 }
 
+void DefaultDebugDrawer::DrawTriMesh(Triangle* tri, int triCount, Vec4& colour)
+{
+	glColor(colour);
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < triCount; ++i)
+	{
+		glVertex(tri[i][0]);
+		glVertex(tri[i][1]);
+		glVertex(tri[i][2]);
+	}
+	glEnd();
+}
+

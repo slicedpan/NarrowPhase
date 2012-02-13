@@ -19,6 +19,9 @@ public:
 	void CalculateNormals();
 	virtual void OnNarrowPhase(ConvexPolyhedron* other, Contact contact) {}
 	virtual void Init()	{}
+	void InitialiseTris(int* indices);
+	void SetDebugColour(Vec4& colour) { debugColour = colour; }
+	Vec4& GetDebugColour() { return debugColour; }
 protected:
 	bool centreComputed;
 	int numTris;
@@ -28,5 +31,6 @@ protected:
 	Vec3* points;
 	Vec3 centre;
 	Vec3 localCentre;
+	Vec4 debugColour;
 };
 

@@ -4,7 +4,8 @@
 ConvexPolyhedron::ConvexPolyhedron(int numPoints, int numTris)
 	: centreComputed(false),
 	centre(0, 0, 0),
-	localCentre(0, 0, 0)
+	localCentre(0, 0, 0),
+	debugColour(0.5, 0.5, 0.5, 1)
 {
 	this->numTris = numTris;
 	this->numPoints = numPoints;
@@ -60,4 +61,17 @@ void ConvexPolyhedron::ApplyTransform(const Mat4& transform)
 	}
 	CalculateNormals();
 	centre = proj(Vec4(localCentre, 1) * transform);
+}
+
+void ConvexPolyhedron::InitialiseTris(int* indices)
+{
+	int count = 0;
+	for (int i = 0; i < numTris; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			triangles[i].point[count % 3] = indices[count];
+			++count;
+		}
+	}
 }

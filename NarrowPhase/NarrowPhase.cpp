@@ -23,9 +23,8 @@ void NarrowPhase::CollidePairs(std::vector<NarrowPhasePair>& pairs)
 		contacts.push_back(contact);
 
 		if (solver->Collide(pairs[i].p1, pairs[i].p2))
-		{
-			
-			pairs[i].p1->OnNarrowPhase(pairs[i].p2, contact);
+		{			
+			pairs[i].p1->OnNarrowPhase(pairs[i].p2, contact.Reverse());
 			pairs[i].p2->OnNarrowPhase(pairs[i].p1, contact);
 		}
 

@@ -16,5 +16,9 @@ struct Contact
 	}
 	Vec3 Normal;
 	Vec3 Point;
+	Contact Reverse()
+	{
+		return Contact(-this->Normal, this->Point);
+	}
 };
 

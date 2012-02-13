@@ -3,6 +3,7 @@
 #include "Contact.h"
 #include "RigidBody.h"
 #include "IDebugDrawer.h"
+#include "ConvexPolyhedron.h"
 
 PhysicsSystem * PhysicsSystem::currentInstance;
 
@@ -20,11 +21,14 @@ void PhysicsSystem::DrawDebug()
 		return;
 	for (int i = 0; i < rigidBodies.size(); ++i)
 	{
-		debugDrawer->DrawAABB(rigidBodies[i]->GetAABB(), rigidBodies[i]->GetDebugColour());
+		debugDrawer->DrawAABB(rigidBodies[i]->GetAABB(), rigidBodies[i]->GetDebugColour());		
 		//debugDrawer->DrawRigidBodyMotion(*rigidBodies[i]);
 		ConvexPolyhedron* poly = rigidBodies[i]->GetPoly();
 		if (poly)
-			debugDrawer->DrawPoly(poly);
+		{
+			//debugDrawer->DrawPoly(poly);
+			debugDrawer->DrawTriMesh(poly->GetTriangles(), poly->GetNumberOfTriangles(), poly->GetDebugColour());
+		}
 	}
 
 	debugDrawer->DrawContacts(narrowPhase.GetContacts());

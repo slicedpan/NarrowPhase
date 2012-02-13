@@ -91,6 +91,7 @@ bool VoronoiSolver::Collide(ConvexPolyhedron* poly1, ConvexPolyhedron* poly2)
 	minDist = FLT_MAX;
 	if (Check(poly1, poly2))
 		return true;
+	lastContact = lastContact.Reverse();
 	return Check(poly2, poly1);	
 }
 

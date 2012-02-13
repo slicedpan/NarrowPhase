@@ -8,8 +8,7 @@ Box::Box(Vec3 centre, Vec3 extents) : RigidBody(), ConvexPolyhedron(8, 12)
 	SetPosition(centre);
 	this->extents = extents;
 	this->max = (extents / 2.0f);
-	this->min = -(extents / 2.0f);
-	this->Colour = Vec3(0.9, 0.1, 0.0);	
+	this->min = -(extents / 2.0f);	
 	SetOrientation(Vec4(1.0f, 0.0f, 0.0f, 0.0f));
 	baseBB.SetMax(max);
 	baseBB.SetMin(min);
@@ -74,7 +73,7 @@ void Box::Draw()
 {
 	glPushMatrix();
 	glMultMatrixf(GetTransform().Ref());
-	glColor(Colour);
+	glColor(Vec4(1, 1, 1, 1));
 	DrawQuad(0, 1, 2, 3);
 	DrawQuad(4, 5, 6, 7);
 	DrawQuad(0, 1, 5, 4);
@@ -114,7 +113,7 @@ void Box::OnUpdateTransform()
 
 void Box::OnNarrowPhase(ConvexPolyhedron* other, Contact contact)
 {
-	debugColour = Vec4(0, 0.7, 0.7, 1);
+	RigidBody::SetDebugColour(Vec4(0, 0.7, 0.7, 1));
 }
 
 

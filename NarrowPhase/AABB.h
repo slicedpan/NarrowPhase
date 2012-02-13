@@ -11,7 +11,23 @@ public:
 		SetMin(minPoint);
 		SetMax(maxPoint);
 		CalcCentre();
-	}			
+	}
+	inline void InitFromPoints(Vec3* pointArray, int numPoints)
+	{
+		min = Vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+		max = Vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+		for (int i = 0; i < numPoints; ++i)
+		{
+			for (int j = 0; j < 3; ++j)
+			{
+				if (pointArray[i][j] > max[j])
+					max[j] = pointArray[i][j];
+				else if (pointArray[i][j] < min[j])
+					min[j] = pointArray[i][j];
+			}
+		}
+		CalcCentre();
+	}
 	~AABB(void);
 	inline Vec3 GetMin()
 	{
