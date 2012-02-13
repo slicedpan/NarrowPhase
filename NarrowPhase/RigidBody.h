@@ -35,6 +35,7 @@ public:
 	virtual ConvexPolyhedron* GetPoly() { return 0; }
 protected:
 	AABB baseBB;
+	Vec4 debugColour;
 private:
 	Vec3 position;
 	Vec3 lastPosition;
@@ -45,7 +46,6 @@ private:
 	Mat4 transform;	
 	AABB currentBB;
 	float mass;
-	Vec4 debugColour;
 };
 
 inline void RigidBody::SetPosition(Vec3 position)

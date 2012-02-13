@@ -63,6 +63,9 @@
     <ClCompile Include="BruteForceSolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VoronoiSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ICollidable.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BruteForceSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VoronoiSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

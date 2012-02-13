@@ -114,7 +114,7 @@ void Box::OnUpdateTransform()
 
 void Box::OnNarrowPhase(ConvexPolyhedron* other, Contact contact)
 {
-
+	debugColour = Vec4(0, 0.7, 0.7, 1);
 }
 
 

@@ -78,6 +78,7 @@
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="VoronoiSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="VoronoiSolver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

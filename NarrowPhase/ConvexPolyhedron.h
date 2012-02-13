@@ -10,20 +10,23 @@ class ConvexPolyhedron
 public:
 	ConvexPolyhedron(int numPoints, int numTris);
 	~ConvexPolyhedron(void);
-	int GetNumberOfTriangles() { return triangleNum; }
+	int GetNumberOfTriangles() { return numTris; }
+	int GetNumberOfPoints() { return numPoints; }
 	Triangle* GetTriangles() { return triangles; }
 	Vec3* GetPoints() { return points; }
+	Vec3 GetCentre();	
 	void ApplyTransform(const Mat4& transform);
 	void CalculateNormals();
 	virtual void OnNarrowPhase(ConvexPolyhedron* other, Contact contact) {}
-	virtual void Init() 
-	{
-
-	}
+	virtual void Init()	{}
 protected:
-	int triangleNum;
+	bool centreComputed;
+	int numTris;
+	int numPoints;
 	Triangle* triangles;
 	Vec3* localPoints;
 	Vec3* points;
+	Vec3 centre;
+	Vec3 localCentre;
 };
 

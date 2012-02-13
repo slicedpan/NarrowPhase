@@ -4,13 +4,13 @@
 
 struct Triangle
 {
-	Triangle(int p1, int p2, int p3)
+	Triangle(int p1, int p2, int p3) : pointArray(0), debugColour(0, 1, 0)
 	{
 		point[0] = p1;
 		point[1] = p2;
 		point[2] = p3;
 	}
-	Triangle()
+	Triangle() : pointArray(0), debugColour(0, 1, 0)
 	{
 		point[0] = 0;
 		point[1] = 0;
@@ -28,6 +28,12 @@ struct Triangle
 	}
 	int point[3];
 	Vec3 normal;
+	Vec3* pointArray;
+	Vec3& operator[] (int index)
+	{
+		return *(pointArray + point[index % 3]);
+	}
+	Vec3 debugColour;
 };
 
 inline void TriFromQuad(Triangle* t1, Triangle* t2, int q1, int q2, int q3, int q4)

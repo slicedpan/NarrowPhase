@@ -52,6 +52,7 @@ CameraController* cameraController;
 FPSCamera* camera;
 
 int fps = 60;
+bool physicsActive = true;
 
 Plane * groundPlane;
 ColouredParticleSystem* particleSystem;
@@ -72,7 +73,7 @@ Vec3 testVel;
 void AddBox()
 {
 	Box* box = new Box(ColouredParticleSystem::RandomVector(30.0) + Vec3(0, 15, 0), ColouredParticleSystem::RandomVector(10.0) + Vec3(5, 5, 5));
-	box->ApplyImpulse(ColouredParticleSystem::RandomVector(0.2));
+	box->ApplyImpulse(ColouredParticleSystem::RandomVector(0.05));
 	box->ApplyAngularMomentum(ColouredParticleSystem::RandomVector(1), ((float)rand() * 0.01) / RAND_MAX);
 	box->Colour = ColouredParticleSystem::RandomVector(1);
 	boxes.push_back(box);
@@ -149,7 +150,8 @@ void display ()
 	}
 
 	cameraController->Update((float)elapsedTime);
-	PhysicsSystem::GetCurrentInstance()->Integrate((float)elapsedTime / 1000.0f);
+	if (physicsActive)
+		PhysicsSystem::GetCurrentInstance()->Integrate((float)elapsedTime / 1000.0f);
 	Vec4 lightPos(0.0f, 100.0f, 10.0f, 1.0f);
 
  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -237,10 +239,12 @@ void HandleInput()
 		cameraController->MoveDown();
 	}
 
-	if (keystate['b'])
+	if (keystate['b'] && !lastKeystate['b'])
 	{
 		AddBox();
 	}
+	if (keystate['p'] && !lastKeystate['p'])
+		physicsActive = !physicsActive;
 	
 	if (keystate[27])
 		exit(0);
@@ -249,6 +253,8 @@ void HandleInput()
 		int i = 0;
 		testBox = testBox;
 	}
+	if (keystate['t'] && !lastKeystate['t'])
+		PhysicsSystem::GetCurrentInstance()->Integrate(0.016f);
 
 	memcpy(lastKeystate, keystate, sizeof(bool) * 256);
 

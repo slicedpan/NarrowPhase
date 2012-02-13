@@ -26,6 +26,7 @@ void PhysicsSystem::DrawDebug()
 		if (poly)
 			debugDrawer->DrawPoly(poly);
 	}
+
 	debugDrawer->DrawContacts(narrowPhase.GetContacts());
 }
 

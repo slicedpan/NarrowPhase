@@ -14,5 +14,6 @@ public:
 	void DrawPoly(ConvexPolyhedron* poly);
 private:
 	void DrawContact(Contact& contact);
+	Vec3 lastColour;
 };
 

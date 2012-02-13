@@ -58,6 +58,7 @@ void DefaultDebugDrawer::DrawRigidBodyMotion(RigidBody& body)
 
 void DefaultDebugDrawer::DrawContacts(std::vector<Contact>& contacts)
 {
+	lastColour = Vec3(0, 0.5, 1);
 	for (int i = 0; i < contacts.size(); ++i)
 	{
 		DrawContact(contacts[i]);
@@ -69,7 +70,7 @@ void DefaultDebugDrawer::DrawContact(Contact& contact)
 	Vec3 v1 = contact.Normal + Vec3(1.0, 1.0, 1.0);
 	v1 = norm(cross(v1, contact.Normal));
 	Vec3 end = contact.Point + contact.Normal;
-	glColor3f(0, 1, 0);		
+	glColor(lastColour);		
 	glPointSize(3.0f);
 	glBegin(GL_POINTS);
 	glVertex(contact.Point);
@@ -78,9 +79,9 @@ void DefaultDebugDrawer::DrawContact(Contact& contact)
 	glVertex(contact.Point);
 	glVertex(end);
 	glVertex(end);
-	glVertex(contact.Point + (contact.Normal * 0.8) + (v1 * 0.4));
+	glVertex(contact.Point + (contact.Normal * 0.6) + (v1 * 0.4));
 	glVertex(end);
-	glVertex(contact.Point + (contact.Normal * 0.8) - (v1 * 0.4));		
+	glVertex(contact.Point + (contact.Normal * 0.6) - (v1 * 0.4));		
 	glEnd();
 }
 
@@ -88,11 +89,12 @@ void DefaultDebugDrawer::DrawPoly(ConvexPolyhedron* poly)
 {
 	Triangle* tris = poly->GetTriangles();
 	Vec3* points = poly->GetPoints();
-	poly->CalculateNormals();
-	glColor3f(0.5, 1, 0);
 	glPointSize(3.0f);
+	
 	for (int i = 0; i < poly->GetNumberOfTriangles(); ++i)
 	{
+		lastColour = tris[i].debugColour;
+		glColor(tris[i].debugColour);
 		Vec3& p1 = points[tris[i].point[0]];
 		Vec3& p2 = points[tris[i].point[1]];
 		Vec3& p3 = points[tris[i].point[2]];
@@ -109,6 +111,10 @@ void DefaultDebugDrawer::DrawPoly(ConvexPolyhedron* poly)
 		glEnd();
 		Contact contact(tris[i].normal, (p1 + p2 + p3) / 3);
 		DrawContact(contact);
-	}
+	}	
+	glColor3f(0, 0.5, 1);
+	glBegin(GL_POINTS);
+	glVertex(poly->GetCentre());
+	glEnd();	
 }
 

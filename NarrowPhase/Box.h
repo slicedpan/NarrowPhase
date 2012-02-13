@@ -22,6 +22,7 @@ public:
 	void OnNarrowPhase(ConvexPolyhedron* other, Contact contact);
 	ConvexPolyhedron* GetPoly() { return this; }
 	bool OnBroadPhaseCollide(RigidBody* other) { return true; }
+	Vec3& GetCentre() { return GetPosition(); }
 private:
 	inline void DrawQuad(int i0, int i1, int i2, int i3)
 	{
