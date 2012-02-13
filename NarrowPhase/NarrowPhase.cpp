@@ -10,11 +10,20 @@ NarrowPhase::NarrowPhase(void)
 
 NarrowPhase::~NarrowPhase(void)
 {
+	delete solver;
 }
 
 void NarrowPhase::CollidePairs(std::vector<NarrowPhasePair>& pairs)
 {
-	contacts.clear();
+	int cs = contacts.size();
+	if (!contacts.empty())
+	{
+		while (cs > 0)
+		{
+			contacts.pop_back();
+			--cs;
+		}
+	}
 	if (pairs.size() == 0)
 		return;
 	for (int i = 0; i < pairs.size(); ++i)
@@ -27,6 +36,5 @@ void NarrowPhase::CollidePairs(std::vector<NarrowPhasePair>& pairs)
 			pairs[i].p1->OnNarrowPhase(pairs[i].p2, contact.Reverse());
 			pairs[i].p2->OnNarrowPhase(pairs[i].p1, contact);
 		}
-
 	}
 }

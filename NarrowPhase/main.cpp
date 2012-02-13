@@ -34,6 +34,8 @@ float yMouse = (float)height / 2.0f;
 float dMouseX = 0.0f;
 float dMouseY = 0.0f;
 
+float stepSize = 1.0;
+
 bool keystate[256];
 bool lastKeystate[256];
 
@@ -122,17 +124,17 @@ void setup()
 	PhysicsSystem::GetCurrentInstance()->SetDebugDrawer(new DefaultDebugDrawer());
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 	float spec[4];
-	spec[0] = 1.0f;
-	spec[1] = 1.0f;
-	spec[2] = 1.0f;
+	spec[0] = 0.0f;
+	spec[1] = 0.0f;
+	spec[2] = 0.0f;
 	spec[3] = 1.0f;
-	Vec4 amb(0.01f, 0.01f, 0.01f, 0.01f);
+	Vec4 amb(0.01f, 0.01f, 0.01f, 1.0f);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb.Ref());
 	glEnable(GL_LIGHT0);
-	Vec4 diffColour(1.0f, 0.3f, 0.3f, 1.0f);
+	Vec4 diffColour(1.0f, 1.0f, 1.0f, 1.0f);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffColour.Ref());
 
 }
@@ -161,15 +163,16 @@ void display ()
 
 	cameraController->Update((float)elapsedTime);
 	if (physicsActive)
-		PhysicsSystem::GetCurrentInstance()->Integrate((float)elapsedTime / 1000.0f);
-	Vec4 lightPos(0.0f, 100.0f, 10.0f, 1.0f);
+		PhysicsSystem::GetCurrentInstance()->Integrate(stepSize * (float)elapsedTime / 1000.0f);
+	Vec4 lightPos(0.0f, 10.0f, 10.0f, 1.0f);
 
  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
 	glMultMatrixf(camera->GetViewTransform().Ref()); //apply camera transform
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos.Ref());
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos.Ref());	
+	
 	
 	
 	groundPlane->Draw();
@@ -249,6 +252,11 @@ void HandleInput()
 		cameraController->MoveDown();
 	}
 
+	if (keystate['-'])
+		stepSize -= 0.005f;
+	else if (keystate['='])
+		stepSize += 0.005f;
+
 	if (keystate['b'] && !lastKeystate['b'])
 	{
 		AddBox();
@@ -259,7 +267,10 @@ void HandleInput()
 		physicsActive = !physicsActive;
 	
 	if (keystate[27])
+	{
+		delete PhysicsSystem::GetCurrentInstance();
 		exit(0);
+	}
 	if (keystate['h'])
 	{
 		int i = 0;
@@ -293,7 +304,7 @@ void idle ()
 		setprecision(3) << "Camera pitch, yaw: " << camera->Pitch << ", " << camera->Yaw << 
 		setprecision(0) << ").  Position=" << setw(3) << camera->Position[0] << ", " << camera->Position[1] << ", " << camera->Position[2] <<		
 		setprecision(2) << ".  fps=" << fps <<
-		"." << ends;
+		"," << " Step Size:" << stepSize << "."  << ends;
 	glutSetWindowTitle(buffer);
 
 	dMouseX = (xMouse - width / 2.0f);

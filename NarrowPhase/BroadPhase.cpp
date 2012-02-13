@@ -13,34 +13,30 @@ BroadPhase::BroadPhase(void) : needsResync(false)
 	first = 0;
 	second = 1;
 	third = 2;
-	overlapMask = (unsigned char*)malloc(sizeof(unsigned char) * 2500);
+	maskByteSize = 100;
+	overlapMask = (unsigned char*)malloc(sizeof(unsigned char) * maskByteSize);
 	for (int i = 0; i < 8; ++i)
 	{
 		overlapBitMask[i] = 1 << i;
 	}
-	maxPairs = 10000;	
-	maskByteSize = 2500;
+	maxPairs = 400;	
 }
 
 BroadPhase::~BroadPhase(void)
 {
+	free(overlapMask);
 }
 
 void BroadPhase::ReallocateMask()
 {
-	maskByteSize *= 2;
-	realloc(overlapMask, sizeof(unsigned char) * maskByteSize);
+	maskByteSize *= 2;	
+	overlapMask = (unsigned char*)realloc(overlapMask, sizeof(unsigned char) * maskByteSize);
 	maxPairs = maskByteSize * 4;
 }
 
 void BroadPhase::GenerateCollisions()
-{	
- 	int numPairs = bodies.size() * bodies.size();
-	memset(overlapMask, 0, sizeof(unsigned char) * maskByteSize);
-	pairs.clear();
-	if (numPairs > maxPairs)
-		ReallocateMask();
-
+{	 		
+	pairs.clear();	
 	if (bodies.size() * 2 < entries[0].size())
 	{
 		GenerateEntries();
@@ -55,6 +51,11 @@ void BroadPhase::GenerateCollisions()
 		UpdateEntries();
 	}
 	SortEntries();
+	int numPairs = bodies.size() * bodies.size();
+
+	if (numPairs > maxPairs)
+		ReallocateMask();
+	memset(overlapMask, 0, sizeof(unsigned char) * numPairs);
 
 	indexActive.clear();
 	

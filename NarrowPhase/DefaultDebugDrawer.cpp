@@ -71,7 +71,7 @@ void DefaultDebugDrawer::DrawContact(Contact& contact)
 	v1 = norm(cross(v1, contact.Normal));
 	Vec3 end = contact.Point + contact.Normal;
 	glColor(lastColour);		
-	glPointSize(3.0f);
+	glPointSize(5.0f);
 	glBegin(GL_POINTS);
 	glVertex(contact.Point);
 	glEnd();

@@ -4,6 +4,7 @@
 #include "RigidBody.h"
 #include "IDebugDrawer.h"
 #include "ConvexPolyhedron.h"
+#include <glut.h>
 
 PhysicsSystem * PhysicsSystem::currentInstance;
 
@@ -13,6 +14,8 @@ PhysicsSystem::PhysicsSystem(void) : debugDrawer(0)
 
 PhysicsSystem::~PhysicsSystem(void)
 {
+	if (debugDrawer)
+		delete debugDrawer;
 }
 
 void PhysicsSystem::DrawDebug()
@@ -27,7 +30,9 @@ void PhysicsSystem::DrawDebug()
 		if (poly)
 		{
 			//debugDrawer->DrawPoly(poly);
+			glEnable(GL_LIGHTING);
 			debugDrawer->DrawTriMesh(poly->GetTriangles(), poly->GetNumberOfTriangles(), poly->GetDebugColour());
+			glDisable(GL_LIGHTING);
 		}
 	}
 

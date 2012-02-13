@@ -66,9 +66,11 @@ private:
 			index2 = index1;
 			index1 = i;
 		}
-		int flatIndex = index1 + index2 * bodies.size();
+		int flatIndex = index2 + index1 * bodies.size();
 		int maskIndex = flatIndex % 4;
 		flatIndex /= 4;
+		if (flatIndex >= maskByteSize)
+			throw;
 		*(overlapMask + flatIndex) |= overlapBitMask[(maskIndex * 2) + pos];	
 	}
 	bool CheckMask(int index1, int index2, int pos)
@@ -80,9 +82,11 @@ private:
 			index2 = index1;
 			index1 = i;
 		}
-		int flatIndex = index1 + index2 * bodies.size();
+		int flatIndex = index2 + index1 * bodies.size();
 		int maskIndex = flatIndex % 4;
 		flatIndex /= 4;
+		if (flatIndex >= maskByteSize)
+			throw;
 		return *(overlapMask + flatIndex) & overlapBitMask[(maskIndex * 2) + pos];
 	}
 
