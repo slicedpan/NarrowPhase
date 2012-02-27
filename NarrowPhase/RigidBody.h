@@ -1,7 +1,6 @@
 #pragma once
 
 #include <svl\SVL.h>
-#include "Quaternion.h"
 #include "AABB.h"
 
 class ConvexPolyhedron;

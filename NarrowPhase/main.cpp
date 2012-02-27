@@ -220,6 +220,8 @@ void display ()
 	glEnd();
 	*/
 
+	while (glutGet(GLUT_ELAPSED_TIME) - currentTime < 16) {}	
+
 	glutSwapBuffers();
 }
 
